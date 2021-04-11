@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ROUTES from "./constants/ROUTES";
 import Header from "./Header/Header";
+import SubmitForm from "./SubmitForm/SubmitForm";
 
 function App() {
   return (
@@ -19,7 +20,6 @@ function App() {
   );
 }
 
-const SubmitForm = () => <div>Submit form</div>;
 const Highscores = () => <div>Highscores</div>;
 
 export default App;
