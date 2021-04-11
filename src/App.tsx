@@ -1,5 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ROUTES from "./constants/ROUTES";
+import Header from "./Header/Header";
 
 function App() {
   return (
@@ -19,20 +21,5 @@ function App() {
 
 const SubmitForm = () => <div>Submit form</div>;
 const Highscores = () => <div>Highscores</div>;
-
-const ROUTES = {
-  submissions: "/submissions",
-  highscores: "/highscores",
-};
-
-const Header = () => (
-  <header>
-    <h1>C Challange</h1>
-    <nav>
-      <Link to={ROUTES.submissions}>Solve</Link>
-      <Link to={ROUTES.highscores}>Top 3</Link>
-    </nav>
-  </header>
-);
 
 export default App;
