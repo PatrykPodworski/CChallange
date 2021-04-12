@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ROUTES from "./constants/ROUTES";
-import Header from "./Header/Header";
-import SubmitForm from "./SubmitForm/SubmitForm";
+import Header from "./Header";
+import Highscores from "./Highscores";
+import SubmitForm from "./SubmitForm";
 
 function App() {
   return (
@@ -19,7 +20,5 @@ function App() {
     </Router>
   );
 }
-
-const Highscores = () => <div>Highscores</div>;
 
 export default App;
