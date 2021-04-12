@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import Button from "../components/Button";
+import styled from "styled-components";
 
 const SubmitForm = () => {
   const handleOnSubmit = (values: FormValues) => {
@@ -15,27 +16,64 @@ const SubmitForm = () => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleOnSubmit}>
-      <Form>
-        <label htmlFor="name">Name</label>
-        <Field id="name" name="name" placeholder="Name" />
-
-        <label htmlFor="taskType">Task</label>
-        <Field id="taskType" name="taskType" placeholder="Task" />
-
-        <p>{taskDescription}</p>
-        <label htmlFor="solutionCode">Solution code</label>
-        <Field
-          id="solutionCode"
-          name="solutionCode"
-          placeholder="Solution code"
-        />
-        <Button type="submit">Submit</Button>
-      </Form>
+      <StyledForm>
+        <StyledInputGroup>
+          <StyledLabel htmlFor="name">Name</StyledLabel>
+          <StyledField id="name" name="name" placeholder="Name" />
+        </StyledInputGroup>
+        <StyledInputGroup>
+          <StyledLabel htmlFor="taskType">Task</StyledLabel>
+          <StyledField id="taskType" name="taskType" placeholder="Task" />
+        </StyledInputGroup>
+        <StyledInputGroup>
+          <StyledLabel>Description</StyledLabel>
+          <StyledP>{taskDescription}</StyledP>
+        </StyledInputGroup>
+        <StyledInputGroup>
+          <StyledLabel htmlFor="solutionCode">Solution code</StyledLabel>
+          <StyledField
+            id="solutionCode"
+            name="solutionCode"
+            placeholder="Solution code"
+          />
+        </StyledInputGroup>
+        <StyledInputGroup>
+          <StyledLabel />
+          <StyledButton type="submit">Submit</StyledButton>
+        </StyledInputGroup>
+      </StyledForm>
     </Formik>
   );
 };
 
-export default SubmitForm;
+const StyledP = styled.p`
+  margin: 0;
+`;
+
+const StyledField = styled(Field)`
+  flex-grow: 1;
+`;
+
+const StyledButton = styled(Button)`
+  margin-left: 0px;
+`;
+
+const StyledLabel = styled.label`
+  flex-basis: 120px;
+  flex-shrink: 0;
+`;
+
+const StyledInputGroup = styled.div`
+  display: flex;
+  margin: 8px 0px;
+`;
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  margin: 64px;
+  max-width: 400px;
+`;
 
 type FormValues = {
   name: string;
@@ -45,4 +83,6 @@ type FormValues = {
 
 type TaskType = "Task1" | "Task2";
 
-const taskDescription = `Meoooow meowing chowing and wowing purr as loud as possible, be the most annoying cat that you can, and, knock everything off the table eat owner's food or catch eat throw up catch eat throw up bad birds weigh eight pounds but take up a full-size bed for meow meow. Thinking longingly about tuna brine dead stare with ears cocked, and lick left leg for ninety minutes, still dirty or shove bum in owner's face like camera lens. Adventure always cat gets stuck in tree firefighters try to get cat down firefighters get stuck in tree cat eats firefighters' slippers check cat door for ambush 10 times before coming in or really likes hummus.`;
+const taskDescription = `Meoooow meowing chowing and wowing purr as loud as possible, be the most annoying cat that you can, and, knock everything off the table eat owner's food or catch eat throw up catch eat throw up bad birds weigh eight pounds but take up.`;
+
+export default SubmitForm;
