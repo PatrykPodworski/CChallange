@@ -1,12 +1,48 @@
 import { Field, Form, Formik, FormikProps } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import Button from "../components/Button";
 import styled from "styled-components";
 import Task from "./models/Task";
+import axios from "axios";
+import CchallangeLoader from "../components/CchallangeLoader";
 
 const SubmitForm = () => {
+  const [result, setResult] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOnSubmit = (values: FormValues) => {
-    console.log(values);
+    postSolution(values.name, values.taskId, values.solutionCode);
+  };
+
+  const postSolution = (
+    submissionerName: string,
+    taskId: string,
+    solutionCode: string
+  ) => {
+    setIsLoading(true);
+    axios
+      .request<string>({
+        method: "post",
+        url: "https://localhost:44379/submitTask",
+        data: {
+          submissionerName,
+          taskId,
+          solutionCode,
+        },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
+      .then((x) => x.data)
+      .then((x) => {
+        setResult(x);
+        setIsLoading(false);
+      })
+      .catch((x) => {
+        setResult("There was a problem while uploading your solution.");
+        setIsLoading(false);
+      });
   };
 
   const initialValues: FormValues = {
@@ -17,6 +53,14 @@ const SubmitForm = () => {
 
   const getTaskDescription = (taskId: string) =>
     tasksMock.find((x) => x.id === taskId)?.description;
+
+  if (isLoading) {
+    return <CchallangeLoader />;
+  }
+
+  if (result) {
+    return <h2>{result}</h2>;
+  }
 
   return (
     <Formik initialValues={initialValues} onSubmit={handleOnSubmit}>
@@ -101,24 +145,17 @@ type FormValues = {
   solutionCode: string;
 };
 
-const taskDescription = `Meoooow meowing chowing and wowing purr as loud as possible, be the most annoying cat that you can, and, knock everything off the table eat owner's food or catch eat throw up catch eat throw up bad birds weigh eight pounds but take up.`;
-
 export default SubmitForm;
 
 const tasksMock: Task[] = [
   {
-    id: "task1 id",
-    name: "task1 name",
-    description: `task1 ${taskDescription}`,
+    id: "683a8c42-225c-4ed4-ba4a-e8c5a8523dce",
+    name: "Echo1",
+    description: `Description of Echo1 task. Input should be equal to output.`,
   },
   {
-    id: "task2 id",
-    name: "task2 name",
-    description: `task2 ${taskDescription}`,
-  },
-  {
-    id: "task3 id",
-    name: "task3 name",
-    description: `task3 ${taskDescription}`,
+    id: "d6ee10cd-bd75-4b51-8d6a-d701e5b1faf6",
+    name: "Echo2",
+    description: `Description of Echo2 task. Input should be equal to output.`,
   },
 ];
