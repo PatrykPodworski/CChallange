@@ -1,9 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "../constants/COLORS";
-import { highscoresMock } from "./models/Highscore";
+import CchallangeLoader from "../components/CchallangeLoader";
+import useFetchHighscores from "./useFetchHighscores";
 
 export const Highscores = () => {
+  const { highscores, isLoading, error } = useFetchHighscores();
+
+  if (isLoading) {
+    return <CchallangeLoader />;
+  }
+
+  if (error) {
+    return <h3>{error}</h3>;
+  }
+
   return (
     <StyledWrapper>
       <StyledTable cellPadding="8" cellSpacing="0">
@@ -12,10 +23,10 @@ export const Highscores = () => {
           <th>Success solutions</th>
           <th>Tasks</th>
         </StyledTableHeaderRow>
-        {highscoresMock.map((x) => (
+        {highscores.map((x) => (
           <StyledTableRow>
-            <td>{x.name}</td>
-            <td>{x.numberOfSolutions}</td>
+            <td>{x.userName}</td>
+            <td>{x.numberOfSuccesfulSolutions}</td>
             <td>{x.solvedTasks.join(", ")}</td>
           </StyledTableRow>
         ))}
